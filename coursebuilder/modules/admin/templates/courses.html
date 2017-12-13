@@ -98,18 +98,26 @@
             Category
             <i class="material-icons gcb-sorted-icon gcb-list__icon"></i>
           </th>
+          <th id="admin_emails_column" class="gcb-sorted-none">
+            Admin Emails
+          <i class="material-icons gcb-sorted-icon gcb-list__icon"></i>
+          </th>
           <th id="enrolled_column" class="gcb-sorted-none">
             Registered Students
             <i class="material-icons gcb-sorted-icon gcb-list__icon"></i>
           </th>
+
           {% for item in additional_headers %}
             {{ item }}
           {% endfor %}
           <th class="gcb-list__cell--icon gcb-not-sortable"></th>
+
         </tr>
+
       </thead>
       <tbody>
         {% for course in courses %}
+        <!--{{course}}-->
         <tr data-course-namespace="{{ course.namespace_name }}">
           <td class="gcb-list-select-course">
             <input
@@ -168,7 +176,16 @@
                href="{{ course.slug }}/dashboard?action=settings_homepage">
               {{ course.category }}
             </a>
+          </td><td class="gcb-courses-admin_emails">
+            <a id="admin_emails_{{ course.namespace_name }}"
+               class="gcb-text-to-sort-by"
+               href="{{ course.slug }}/dashboard?action=settings_homepage">
+
+                    {{ course.admin_user_emails }}
+
+            </a>
           </td>
+
           <td class="gcb-courses-enrolled">
             <div>
               <div id="enrolled_{{ course.namespace_name }}"

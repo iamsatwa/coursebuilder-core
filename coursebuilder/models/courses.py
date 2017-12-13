@@ -3036,6 +3036,10 @@ class Course(object):
     def title(self):
         return self._app_context.get_title()
 
+    @property
+    def admin_emails(self):
+        return self._app_context.get_admin_emails()
+
     def can_enroll_current_user(self):
         return (
             self._app_context.now_available and

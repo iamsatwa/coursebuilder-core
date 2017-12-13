@@ -893,6 +893,16 @@ class ApplicationContext(object):
     def get_slug(self):
         return self.slug
 
+    def get_admin_emails(self):
+        try:
+            # print self.get_environ()['course']
+            # print self.get_environ()['course']['admin_user_emails']
+            # t = self.get_environ()['course']['admin_user_emails']
+            # print t, type(t)
+            return self.get_environ()['course']['admin_user_emails']
+        except KeyError:
+            return 'UNTITLED'
+
     def get_config_filename(self):
         """Returns absolute location of a course configuration file."""
         filename = abspath(self.get_home_folder(), GCB_CONFIG_FILENAME)

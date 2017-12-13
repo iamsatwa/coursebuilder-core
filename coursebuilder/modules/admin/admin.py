@@ -862,6 +862,13 @@ class BaseAdminHandler(ConfigPropertyEditor):
             slug = app_context.get_slug()
             name = app_context.get_title()
             ns_name = app_context.get_namespace_name()
+            admin_user_emails = app_context.get_admin_emails()
+            # print app_context, "line 865"
+            from pprint import pprint
+            # pprint(dir(app_context))
+            # print app_context.get_admin_emails()
+            # print vars(app_context)
+            # print app_context.to_dict()
 
             if slug == '/':
                 link = '/dashboard'
@@ -870,16 +877,20 @@ class BaseAdminHandler(ConfigPropertyEditor):
 
             is_selected_course = (ns_name == this_namespace)
             environ = app_context.get_environ()
+            # print courses, "line 875"
             course_availability = (
                 courses.Course.get_course_availability_from_environ(environ))
             availability_title = courses.COURSE_AVAILABILITY_POLICIES[
                 course_availability]['title']
+
             start_when = triggers.MilestoneTrigger.get_course_when(
                 environ, constants.START_DATE_MILESTONE, name)
             end_when = triggers.MilestoneTrigger.get_course_when(
                 environ, constants.END_DATE_MILESTONE, name)
             category = courses.Course.get_named_course_setting_from_environ(
                 'category_name', environ, default='')
+            # admin_emails = courses.Course.get_course_availability_from_environ('admin_emails', environ,default='')
+            # print admin_emails
             enrolled = enrollments.get_course_enrolled(enrolled_dto, name)
             total_students += enrolled.count
 
@@ -902,6 +913,7 @@ class BaseAdminHandler(ConfigPropertyEditor):
                 'end_date': end_when.date_only,
                 'end_date_full': end_when.no_suffix,
                 'category': category,
+                'admin_user_emails': admin_user_emails,
             })
 
         additional_footers = [
